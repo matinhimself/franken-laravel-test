@@ -44,7 +44,7 @@ RUN pie install --no-cache php-decimal/ext-decimal
 RUN pie install --no-cache pecl/timezonedb
 RUN pie install --no-cache rdkafka/rdkafka
 RUN pie install --no-cache open-telemetry/ext-opentelemetry
-RUN pie install --no-cache protobuf
+RUN pie install --no-cache google/protobuf
 
 
 
