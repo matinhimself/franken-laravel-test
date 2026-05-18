@@ -44,9 +44,6 @@ RUN pie install --no-cache php-decimal/ext-decimal
 RUN pie install --no-cache pecl/timezonedb
 RUN pie install --no-cache rdkafka/rdkafka
 RUN pie install --no-cache open-telemetry/ext-opentelemetry
-RUN pie install --no-cache google/protobuf
-
-
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
     docker-php-ext-install bcmath curl gd opcache pdo_mysql sockets gmp zip pcntl && \
