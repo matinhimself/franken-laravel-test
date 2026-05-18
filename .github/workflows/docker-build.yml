@@ -53,17 +53,6 @@ jobs:
           cache-from: type=gha,scope=base
           cache-to: type=gha,mode=max,scope=base
 
-      - name: Build and push app image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          target: app
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=app
-          cache-to: type=gha,mode=max,scope=app
-
       - name: Smoke test — artisan version
         if: github.event_name == 'pull_request'
         run: |
