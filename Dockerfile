@@ -2,7 +2,7 @@
 # Base stage — FrankenPHP + PHP extensions + Composer
 # Uses only public images; no private registries or APM agent.
 # =============================================================================
-FROM dunglas/frankenphp:latest AS base
+FROM registry.ecoex.ir/docker-hub-proxy/dunglas/frankenphp:1-php8.5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
