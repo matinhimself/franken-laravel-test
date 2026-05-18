@@ -6,6 +6,8 @@ FROM dunglas/frankenphp:latest AS base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG COMPOSER_PROXY=salam.com
+
 # System dependencies (mirrors base.php.Containerfile)
 RUN apt-get update && \
     apt-get install -y \
