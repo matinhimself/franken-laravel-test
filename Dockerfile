@@ -47,7 +47,8 @@ RUN pie install --no-cache open-telemetry/ext-opentelemetry
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
     docker-php-ext-install bcmath curl gd opcache pdo_mysql sockets gmp zip pcntl && \
-    mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+    mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
+    rm -rf /tmp/pear
 
 # Composer + internal proxy (mirrors prod/php.Containerfile)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
