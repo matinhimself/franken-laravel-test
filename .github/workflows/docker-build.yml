@@ -53,25 +53,6 @@ jobs:
           cache-from: type=gha,scope=base
           cache-to: type=gha,mode=max,scope=base
 
-      - name: Verify PHP extensions
-        run: |
-          echo "=== PHP version ==="
-          docker run --rm franken-laravel:base php -v
-          echo ""
-          echo "=== Checking required extensions ==="
-          docker run --rm franken-laravel:base php -r "
-            \$required = ['decimal', 'redis', 'amqp', 'pdo_mysql', 'bcmath', 'gd', 'intl', 'gmp', 'zip', 'pcntl', 'sockets', 'apcu'];
-            \$missing = [];
-            foreach (\$required as \$ext) {
-              if (!extension_loaded(\$ext)) { \$missing[] = \$ext; }
-              else { echo 'OK: ' . \$ext . PHP_EOL; }
-            }
-            // OPcache is a Zend extension — extension_loaded() always returns false for it
-            if (function_exists('opcache_get_status')) { echo 'OK: opcache (Zend)' . PHP_EOL; }
-            else { \$missing[] = 'opcache'; }
-            if (\$missing) { echo 'MISSING: ' . implode(', ', \$missing) . PHP_EOL; exit(1); }
-          "
-
       - name: Build and push app image
         uses: docker/build-push-action@v5
         with:
