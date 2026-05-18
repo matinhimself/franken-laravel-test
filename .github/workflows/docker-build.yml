@@ -42,18 +42,18 @@ jobs:
             type=sha,prefix=sha-,format=short
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build base image (extensions + composer)
+      - name: Build and push image
         uses: docker/build-push-action@v5
         with:
           context: .
           target: base
-          push: true
-          load: true
-          tags: franken-laravel:base
+          push: ${{ github.event_name != 'pull_request' }}
+          load: ${{ github.event_name == 'pull_request' }}
+          tags: ${{ github.event_name == 'pull_request' && 'franken-laravel:base' || steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=base
           cache-to: type=gha,mode=max,scope=base
 
-      - name: Smoke test — artisan version
+      - name: Smoke test — PHP version
         if: github.event_name == 'pull_request'
-        run: |
-          docker run --rm ${{ fromJSON(steps.meta.outputs.json).tags[0] }} php artisan --version
+        run: docker run --rm franken-laravel:base php -v
