@@ -46,15 +46,15 @@ RUN pie install --no-cache rdkafka/rdkafka
 RUN pie install --no-cache open-telemetry/ext-opentelemetry
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
-RUN docker-php-ext-install bcmath 
-RUN docker-php-ext-install curl 
-RUN docker-php-ext-install gd 
-RUN docker-php-ext-install opcache 
-RUN docker-php-ext-install pdo_mysql 
-RUN docker-php-ext-install sockets 
-RUN docker-php-ext-install gmp 
-RUN docker-php-ext-install zip 
-RUN docker-php-ext-install pcntl
+RUN install-php-extensions bcmath 
+RUN install-php-extensions curl 
+RUN install-php-extensions gd 
+RUN install-php-extensions opcache 
+RUN install-php-extensions pdo_mysql 
+RUN install-php-extensions sockets 
+RUN install-php-extensions gmp 
+RUN install-php-extensions zip 
+RUN install-php-extensions pcntl
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN rm -rf /tmp/pear
 
