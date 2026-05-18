@@ -28,19 +28,25 @@ RUN cd /tmp && \
     ./configure && make && make install && \
     rm -rf /tmp/mpdecimal-4.0.1*
 
-# PECL extensions via pie + bundled extensions via docker-php-ext-install
-# ZTS is already provided by FrankenPHP — do not recompile PHP.
-RUN apt-get update && apt-get install -y $PHPIZE_DEPS && \
-    pie install --no-cache apcu/apcu && \
-    pie install --no-cache phpredis/phpredis && \
-    pie install --no-cache php-amqp/php-amqp && \
-    pie install --no-cache php-decimal/ext-decimal && \
-    pie install --no-cache pecl/timezonedb && \
-    pie install --no-cache rdkafka/rdkafka && \
-    pie install --no-cache open-telemetry/ext-opentelemetry && \
-    pie install --no-cache protobuf && \
-    apt-get purge -y --auto-remove $PHPIZE_DEPS && \
-    rm -rf /var/lib/apt/lists/* /tmp/pear
+
+RUN apt-get update && apt-get install -y \
+    $PHPIZE_DEPS \
+    librabbitmq-dev \
+    libssl-dev \
+    libzstd-dev \
+    libsasl2-dev \
+    libmpdec-dev
+
+RUN pie install --no-cache apcu/apcu
+RUN pie install --no-cache phpredis/phpredis
+RUN pie install --no-cache php-amqp/php-amqp
+RUN pie install --no-cache php-decimal/ext-decimal
+RUN pie install --no-cache pecl/timezonedb
+RUN pie install --no-cache rdkafka/rdkafka
+RUN pie install --no-cache open-telemetry/ext-opentelemetry
+RUN pie install --no-cache protobuf
+
+
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
     docker-php-ext-install bcmath curl gd opcache pdo_mysql sockets gmp zip pcntl && \
