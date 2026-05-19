@@ -43,7 +43,6 @@ RUN docker-php-ext-install sockets
 RUN docker-php-ext-install gmp 
 RUN docker-php-ext-install zip 
 RUN docker-php-ext-install pcntl
-RUN docker-php-ext-enable opcache
 RUN rm -rf /tmp/pear
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
