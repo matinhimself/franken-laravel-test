@@ -30,14 +30,16 @@ RUN cd /tmp && \
     ./configure && make && make install && \
     rm -rf /tmp/mpdecimal-4.0.1*
 
-
 RUN apt-get update && apt-get install -y \
     $PHPIZE_DEPS \
     librabbitmq-dev \
     libssl-dev \
     libzstd-dev \
     libsasl2-dev \
-    libmpdec-dev
+    libmpdec-dev \
+    autoconf \
+    g++ \
+    make
 
 RUN pie install --no-cache apcu/apcu
 RUN pie install --no-cache phpredis/phpredis
@@ -46,6 +48,7 @@ RUN pie install --no-cache php-decimal/ext-decimal
 RUN pie install --no-cache pecl/timezonedb
 RUN pie install --no-cache rdkafka/rdkafka
 RUN pie install --no-cache open-telemetry/ext-opentelemetry
+RUN pecl install protobuf
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 RUN install-php-extensions bcmath 
