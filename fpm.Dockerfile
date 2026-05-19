@@ -35,7 +35,15 @@ RUN pecl install decimal && docker-php-ext-enable decimal
 RUN pecl install timezonedb && docker-php-ext-enable timezonedb
 RUN pecl install rdkafka && docker-php-ext-enable rdkafka
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
-RUN install-php-extensions bcmath curl gd opcache pdo_mysql sockets gmp zip pcntl
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install curl 
+RUN docker-php-ext-install gd 
+RUN docker-php-ext-install opcache 
+RUN docker-php-ext-install pdo_mysql 
+RUN docker-php-ext-install sockets 
+RUN docker-php-ext-install gmp 
+RUN docker-php-ext-install zip 
+RUN docker-php-ext-install pcntl
 RUN rm -rf /tmp/pear
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
