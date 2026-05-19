@@ -15,7 +15,7 @@ RUN apt-get update && \
 
 # Build tools required by pecl for C extensions (opentelemetry, protobuf, etc.)
 RUN apt-get update && apt-get install -y \
-    php-pear php-dev gcc g++ make autoconf \
+    $PHPIZE_DEPS gcc g++ make \
  && rm -rf /var/lib/apt/lists/*
 
 # mpdecimal from source (required by ext-decimal)
